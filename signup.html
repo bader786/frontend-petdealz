@@ -51,9 +51,7 @@
     </style>
 </head>
 <body>
- 
-
-    <div class="container1" >
+    <div class="container1">
         <h2>Sign Up for PetDealz</h2>
         <input type="text" id="signupName" placeholder="Name" required>
         <input type="email" id="signupEmail" placeholder="Email" required>
@@ -61,18 +59,14 @@
         <button id="signupButton" onclick="signup()">Sign Up</button>
 
         <a href="index.html" class="link" onclick="toggleForm(event)">Already have an account? Login</a>
-
     </div>
 
-    
-        
- 
     <script>
         async function signup() {
             const name = document.getElementById("signupName").value.trim();
             const email = document.getElementById("signupEmail").value.trim();
             const password = document.getElementById("signupPassword").value;
-    
+
             // Basic validation
             if (!name || !email || !password) {
                 alert("All fields are required!");
@@ -86,25 +80,24 @@
                 alert("Password must be at least 6 characters long!");
                 return;
             }
-    
+
             // Disable button while processing
             const signupButton = document.querySelector(".container1 button");
-
             signupButton.disabled = true;
             signupButton.innerText = "Signing up...";
-    
+
             try {
                 const response = await fetch("https://backend-petdealz-1.onrender.com/signup", {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
                     body: JSON.stringify({ name, email, password }),
                 });
-    
+
                 const data = await response.json();
-    
+
                 if (response.ok) {
                     alert("Signup successful! Please log in.");
-                    toggleForm(); // Switch to login form
+                    toggleForm(event); // Redirect to login page
                 } else {
                     alert(data.error || "Signup failed. Try again.");
                 }
@@ -112,23 +105,16 @@
                 alert("Error: Unable to connect to the server.");
                 console.error(error);
             }
-    
+
             // Re-enable button
             signupButton.disabled = false;
             signupButton.innerText = "Sign Up";
         }
-    
-    
 
-        
         function toggleForm(event) {
-    event.preventDefault(); // Prevents the default `<a>` behavior
-    window.location.href = "index.html"; // Redirect to login page
-}
-
-        
+            event.preventDefault(); // Prevents default link behavior
+            window.location.href = "index.html"; // Redirect to login page
+        }
     </script>
-    
 </body>
 </html>
-
