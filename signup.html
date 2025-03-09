@@ -121,12 +121,12 @@
     
 
         
-        function toggleForm() {
-            document.getElementById('loginContainer').style.display = 
-                document.getElementById('loginContainer').style.display === 'none' ? 'block' : 'none';
-            document.getElementById('signupContainer').style.display = 
-                document.getElementById('signupContainer').style.display === 'none' ? 'block' : 'none';
-        }
+        function toggleForm(event) {
+    event.preventDefault(); // Prevents the default `<a>` behavior
+    window.location.href = "index.html"; // Redirect to login page
+}
+
+        
     </script>
     
 </body>
