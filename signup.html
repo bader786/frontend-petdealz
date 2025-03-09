@@ -58,7 +58,8 @@
         <input type="text" id="signupName" placeholder="Name" required>
         <input type="email" id="signupEmail" placeholder="Email" required>
         <input type="password" id="signupPassword" placeholder="Password" required>
-        <button onclick="signup()">Sign Up</button>
+        <button id="signupButton" onclick="signup()">Sign Up</button>
+
         <a href="index.html" class="link" onclick="toggleForm(event)">Already have an account? Login</a>
 
     </div>
@@ -87,7 +88,8 @@
             }
     
             // Disable button while processing
-            const signupButton = document.querySelector("#signupContainer button");
+            const signupButton = document.querySelector(".container1 button");
+
             signupButton.disabled = true;
             signupButton.innerText = "Signing up...";
     
