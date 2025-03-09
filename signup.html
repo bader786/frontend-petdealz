@@ -112,7 +112,7 @@
         }
 
         function toggleForm(event) {
-            if (event) event.preventDefault(); // ✅ Fix: Only use if event exists
+            if (event && event.preventDefault) event.preventDefault(); // ✅ Prevent error if event is undefined
             window.location.href = "index.html"; // Redirect to login page
         }
     </script>
