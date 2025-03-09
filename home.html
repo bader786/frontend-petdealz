@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pet Selling - Home</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined">
+
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -13,97 +15,309 @@
         }
         .navbar {
             display: flex;
-            justify-content: space-between;
             align-items: center;
+            justify-content: space-between;
             background: #fff;
             padding: 10px 20px;
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
         }
-        .navbar a {
-            text-decoration: none;
-            color: #333;
-            margin: 0 15px;
-            font-size: 16px;
+        /* 🔹 Hamburger Menu */
+        .menu-container {
+            position: relative;
+            display: inline-block;
         }
-        .search-bar {
-            flex-grow: 1;
-            margin: 0 20px;
+        .menu-button {
+            font-size: 24px;
+            background: none;
+            border: none;
+            cursor: pointer;
         }
-        .search-bar input {
-            width: 100%;
-            padding: 10px;
+        .slogan {
+            font-size: 20px;
+            font-weight: bold;
+            margin-bottom: 5px;
+            padding: 5px;
+            padding-left: 30px;
+            text-align: center;
+        }
+       
+       
+        .dropdown-menu {
+            display: none;
+            position: absolute;
+            top: 40px;
+            left: 0;
+            background: white;
             border: 1px solid #ccc;
             border-radius: 5px;
+            box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
+            width: 160px;
+            z-index: 10;
         }
-        .container {
+        .dropdown-menu a {
+            display: block;
+            padding: 10px;
+            text-decoration: none;
+            color: rgb(0, 0, 0);
+        }
+        .dropdown-menu a:hover {
+            background: #ffffff;
+        }
+        /* 🔹 Filter Button */
+        .filter-container {
+            margin: 10px;
+        }
+        .filter-button {
+            padding: 9px 15px;
+            background: #007bff;
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 100px;
+            margin-top: 10px;
+        }
+        .filter-dropdown {
+            display: none;
+            position: absolute;
+            background: rgb(0, 0, 0);
+            border: 1px solid #ccc;
+            padding: 10px;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+            margin-top: 5px;
+        }
+        .filter-dropdown button {
+            display: block;
+            width: 100%;
+            color: white;
+            margin: 5px 5px;
+            padding: 10px;
+            border: none;
+            background: #170f8a;
+            cursor: pointer;
+        }
+        .filter-dropdown button:hover {
+            background: #000000;
+        }
+        /* 🔹 Pet Listings */
+        .pet-listings {
+            display:flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 15px;
             padding: 20px;
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 20px;
         }
         .pet-card {
             background: white;
             padding: 15px;
-            border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+            width: 200px;
             text-align: center;
         }
         .pet-card img {
             width: 100%;
-            height: 180px;
-            object-fit: cover;
-            border-radius: 10px;
-        }
-        .sell-btn {
-            background: #28a745;
-            color: white;
-            padding: 10px 20px;
-            border: none;
             border-radius: 5px;
-            cursor: pointer;
+        }
+        .pet-card h3 {
+            margin: 10px 0;
+        }
+        .pet-card p {
             font-size: 16px;
+            color: #007bff;
+            font-weight: bold;
         }
-        .sell-btn:hover {
-            background: #218838;
-        }
+        .pet-container {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr); /* Default for large screens */
+    gap: 20px;
+}
+
+/* Bottom Navigation Bar */
+.bottom-nav {
+    position: fixed;
+    height: 50px;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background: rgb(0, 0, 0);
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding: 10px 0;
+    border-top: 2px solid #ddd;
+}
+
+/* Navigation Buttons */
+.nav-item {
+    text-decoration: none;
+    font-size: 16px;
+    color: rgb(255, 255, 255);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.nav-item i {
+    font-size: 24px;
+    margin-bottom: 5px;
+    
+}
+.nav-item{
+    padding-left: 25px;
+}
+
+/* Floating Add Button */
+.add-btn {
+    width: 60px;
+    height: 60px;
+    background: rgb(255, 255, 255);
+    color: rgb(0, 0, 0);
+    padding-left: 10px;
+    font-size:50px;
+    font-weight: bold;
+    border:none;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    
+   
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+}
+
+
     </style>
 </head>
 <body>
+
     <div class="navbar">
-        <a href="home.html">Home</a>
-        <div class="search-bar">
-            <input type="text" id="search" placeholder="Search pets...">
+        <!-- 📌 Hamburger Menu -->
+        <div class="menu-container">
+            <button class="menu-button" onclick="toggleMenu()">☰</button>
+            <div class="dropdown-menu" id="dropdownMenu">
+                <a href="home.html">Home</a>
+                <a href="account.html">Account Details</a>
+                <a href="report.html">Report a Problem</a>
+                <a href="#" onclick="logoutUser()">Logout</a>
+
+            </div>
+        </div> 
+
+        <p class="slogan">Find Your Perfect Pet Companion Today!</p>
+
+       
+        <!-- 📌 Filter Button -->
+        <div class="filter-container">
+            <button class="filter-button" onclick="toggleFilter()">Filter ▼</button>
+            <div class="filter-dropdown" id="filterDropdown">
+                <button onclick="sortPets('lowToHigh')">Price: Low to High</button>
+                <button onclick="sortPets('highToLow')">Price: High to Low</button>
+            </div>
         </div>
-        <a href="login.html">Login</a>
-        <button class="sell-btn" onclick="window.location.href='sell.html'">Sell</button>
     </div>
 
-    <div class="container" id="petList">
-        <!-- Pet listings will be inserted here dynamically -->
+    <!-- 📌 Pet Listings -->
+    <div class="pet-listings" id="petListings">
+        <div class="pet-card" data-price="200">
+            <img src="cat.jpeg" alt="Cat">
+            <h3>Persian Cat</h3>
+            <p>200</p>
+            <p>location</p>
+        </div>
+        <div class="pet-card" data-price="150">
+            <img src="dog.jpg" alt="Dog">
+            <h3>kutta</h3>
+            <p>150</p>
+            <p>location</p>
+        </div>
+        <div class="pet-card" data-price="350">
+            <img src="parrot.jpg" alt="Parrot">
+            <h3> Parrot</h3>
+            <p>350</p>
+            <p>location</p>
+        </div>
+        <div class="pet-card" data-price="100">
+            <img src="goat.jpg" alt="goat">
+            <h3>bakra</h3>
+            <p>100</p>
+            <p>location</p>
+        </div>
+        
     </div>
+    <!-- Bottom Navigation Bar -->
+<!-- Bottom Navigation Bar -->
+<div class="bottom-nav">
+    <!-- Ad Button (Left) -->
+    <a href="ads.html" class="nav-item">
+        <span class="material-icons-outlined">campaign</span> <!-- Ad Icon -->
+        <span>Ad</span>
+    </a>
+
+    <!-- Floating Add Button (Center) -->
+    <button class="add-btn">
+        <span>+</span>
+    </button>
+
+    <!-- Messages Button (Right) -->
+    <a href="messages.html" class="nav-item">
+        <span class="material-icons-outlined">mail_outline</span> <!-- Messages Icon -->
+        <span>Messages</span>
+    </a>
+</div>
+
+
 
     <script>
-        const pets = [
-            { name: "Golden Retriever", image: "https://via.placeholder.com/250", price: "$500" },
-            { name: "Persian Cat", image: "https://via.placeholder.com/250", price: "$300" },
-            { name: "Parrot", image: "https://via.placeholder.com/250", price: "$150" },
-        ];
-        
-        function loadPets() {
-            const petList = document.getElementById("petList");
-            petList.innerHTML = "";
-            pets.forEach(pet => {
-                const petCard = `<div class='pet-card'>
-                                    <img src='${pet.image}' alt='${pet.name}'>
-                                    <h3>${pet.name}</h3>
-                                    <p>${pet.price}</p>
-                                    <button class='sell-btn'>Buy Now</button>
-                                </div>`;
-                petList.innerHTML += petCard;
-            });
+        // 📌 Toggle Hamburger Menu
+        function toggleMenu() {
+            const menu = document.getElementById("dropdownMenu");
+            menu.style.display = (menu.style.display === "block") ? "none" : "block";
         }
-        
-        loadPets();
+        // 📌 Close the menu when clicking outside
+        window.onclick = function(event) {
+            if (!event.target.matches('.menu-button')) {
+                document.getElementById("dropdownMenu").style.display = "none";
+            }
+        }
+
+        // 📌 Toggle Filter Dropdown
+        function toggleFilter() {
+            const filterMenu = document.getElementById("filterDropdown");
+            filterMenu.style.display = (filterMenu.style.display === "block") ? "none" : "block";
+        }
+        // 📌 Logout Function
+function logoutUser() {
+    // Remove user data from local storage
+    localStorage.removeItem("user");
+    sessionStorage.removeItem("user");
+
+    // Redirect to login page
+    window.location.href = "index.html";
+}
+
+
+        // 📌 Sort Pets by Price
+        function sortPets(order) {
+            let petContainer = document.getElementById("petListings");
+            let pets = Array.from(petContainer.getElementsByClassName("pet-card"));
+
+            pets.sort((a, b) => {
+                let priceA = parseInt(a.getAttribute("data-price"));
+                let priceB = parseInt(b.getAttribute("data-price"));
+
+                return order === "lowToHigh" ? priceA - priceB : priceB - priceA;
+            });
+
+            // Reorder the pet listings
+            petContainer.innerHTML = "";
+            pets.forEach(pet => petContainer.appendChild(pet));
+
+            // Close the filter dropdown
+            document.getElementById("filterDropdown").style.display = "none";
+        }
     </script>
+
 </body>
 </html>
