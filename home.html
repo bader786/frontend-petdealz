@@ -174,13 +174,13 @@
     width: 60px;
     height: 60px;
     background-image: url(sellbutton.png) no-repeat center center;
-    background-size: cover;
+     background-size: cover;
    
     padding-left: 10px;
-    font-size:30px;
+    font-size:25px;
     font-weight: bold;
     border:none;
-    border-radius: 50%;
+   
     display: flex;
     align-items: center;
     justify-content: center;
@@ -188,22 +188,16 @@
     
    
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
-}
-.sell-btn {
-            background: url('sellbutton.png') no-repeat center center;
-            background-size: cover;
-            width: 80px;  /* Adjust size as needed */
-            height: 80px;
-            border: none;
-            cursor: pointer;
-            border-radius: 50%; /* Makes it a perfect circle */
-            transition: transform 0.2s ease-in-out;
+    transition: transform 0.2s ease-in-out;
         }
 
-        .sell-btn:hover {
+        .add-btn:hover {
             transform: scale(1.1); /* Slight zoom effect on hover */
         }
 
+        .plus{
+            font-size: larger
+        }
 
     </style>
 </head>
@@ -273,8 +267,11 @@
     </a>
 
     <!-- Floating Add Button (Center) -->
-    <button class="sell-btn"></button>
+    <button class="add-btn">
+        <p class="plus">+<br><b>Sell</b></p>
 
+
+    </button>
 
     <!-- Messages Button (Right) -->
     <a href="messages.html" class="nav-item">
