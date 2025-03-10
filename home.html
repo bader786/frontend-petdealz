@@ -142,7 +142,7 @@
     bottom: 0;
     left: 0;
     width: 100%;
-    background: rgb(0, 0, 0);
+    background: white;
     display: flex;
     justify-content: space-around;
     align-items: center;
@@ -154,7 +154,7 @@
 .nav-item {
     text-decoration: none;
     font-size: 16px;
-    color: rgb(255, 255, 255);
+    color: rgb(0, 0, 0);
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -168,7 +168,7 @@
     padding-left: 80px;
     text-decoration: none;
     font-size: 16px;
-    color: rgb(255, 255, 255);
+    color: rgb(0, 0, 0);
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -183,8 +183,8 @@
 .add-btn {
     width: 60px;
     height: 60px;
-    background-color: #000000;
-    color: white;
+    background-color: white;
+    color: rgb(0, 0, 0);
     
     
    
@@ -200,7 +200,7 @@
    
     
    
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+    
     transition: transform 0.2s ease-in-out;
         }
 
@@ -210,6 +210,9 @@
 
         .plus{
             font-size: larger
+        }
+        .slogan{
+            margin-top: -3px;
         }
 
     </style>
@@ -229,7 +232,67 @@
             </div>
         </div> 
 
-        <p class="slogan">Find Your Perfect Pet Companion Today!</p>
+        <div style="text-align: center; margin-top: 20px;">
+            <p class="slogan" style="font-size: 20px; margin-bottom: 10px;">
+                Find Your Perfect Pet Companion Today!
+            </p>
+        
+            <button id="categoryBtn" style="
+                background-color: #007bff; 
+                color: white; 
+                border: none; 
+                padding: 12px 24px; 
+                font-size: 18px; 
+                border-radius: 25px;
+                cursor: pointer; 
+                padding:5px;
+                margin-left: 30px;
+
+                transition: 0.3s;">
+                Categories ▼
+            </button>
+        
+            <div id="categoryDropdown" style="
+                display: none; 
+                background: rgb(0, 0, 0); 
+                box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); 
+                border-radius: 5px; 
+                padding: 10px; 
+                position: absolute; 
+              
+                left: 50%; 
+                transform: translateX(-50%); 
+                width: 200px; 
+                text-align: left;">
+                <a href="#" style="display: block; padding: 8px 12px; text-decoration: none; color: rgb(255, 255, 255);">Dogs</a>
+                <a href="#" style="display: block; padding: 8px 12px; text-decoration: none; color: rgb(255, 255, 255);">Cats</a>
+                <a href="#" style="display: block; padding: 8px 12px; text-decoration: none; color: rgb(255, 255, 255);">Birds</a>
+                <a href="#" style="display: block; padding: 8px 12px; text-decoration: none; color: rgb(254, 254, 254);">Rabbits</a>
+            </div>
+        </div>
+        
+        <script>
+            const categoryBtn = document.getElementById('categoryBtn');
+            const categoryDropdown = document.getElementById('categoryDropdown');
+        
+            categoryBtn.addEventListener('click', () => {
+                if (categoryDropdown.style.display === 'none') {
+                    categoryDropdown.style.display = 'block';
+                } else {
+                    categoryDropdown.style.display = 'none';
+                }
+            });
+        
+            // Close dropdown if clicked outside
+            window.addEventListener('click', (e) => {
+                if (!categoryBtn.contains(e.target) && !categoryDropdown.contains(e.target)) {
+                    categoryDropdown.style.display = 'none';
+                }
+            });
+        </script>
+        
+        
+        
 
        
         <!-- 📌 Filter Button -->
