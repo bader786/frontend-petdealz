@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pet Selling - Home</title>
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+
 
     <style>
         body {
@@ -171,10 +173,11 @@
 .add-btn {
     width: 60px;
     height: 60px;
-    background: rgb(255, 255, 255);
-    color: rgb(0, 0, 0);
+    background-image: url(sellbutton.png) no-repeat center center;
+    background-size: cover;
+   
     padding-left: 10px;
-    font-size:50px;
+    font-size:30px;
     font-weight: bold;
     border:none;
     border-radius: 50%;
@@ -186,6 +189,20 @@
    
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
 }
+.sell-btn {
+            background: url('sellbutton.png') no-repeat center center;
+            background-size: cover;
+            width: 80px;  /* Adjust size as needed */
+            height: 80px;
+            border: none;
+            cursor: pointer;
+            border-radius: 50%; /* Makes it a perfect circle */
+            transition: transform 0.2s ease-in-out;
+        }
+
+        .sell-btn:hover {
+            transform: scale(1.1); /* Slight zoom effect on hover */
+        }
 
 
     </style>
@@ -252,18 +269,17 @@
     <!-- Ad Button (Left) -->
     <a href="ads.html" class="nav-item">
         <span class="material-icons-outlined">campaign</span> <!-- Ad Icon -->
-        <span>Ad</span>
+        <span>My Ads</span>
     </a>
 
     <!-- Floating Add Button (Center) -->
-    <button class="add-btn">
-        <span>+</span>
-    </button>
+    <button class="sell-btn"></button>
+
 
     <!-- Messages Button (Right) -->
     <a href="messages.html" class="nav-item">
         <span class="material-icons-outlined">mail_outline</span> <!-- Messages Icon -->
-        <span>Messages</span>
+        <span>Chats</span>
     </a>
 </div>
 
