@@ -424,6 +424,30 @@ function logoutUser() {
             // Close the filter dropdown
             document.getElementById("filterDropdown").style.display = "none";
         }
+        async function fetchListings() {
+    const response = await fetch("http://localhost:5000/listings");
+    const listings = await response.json();
+
+    let listingsHTML = "";
+    listings.forEach(listing => {
+        listingsHTML += `
+            <div class="listing-card">
+                <img src="http://localhost:5000/image/${listing.imageId}" alt="${listing.title}" class="listing-image">
+                <h3>${listing.title}</h3>
+                <p>${listing.description}</p>
+                <p><strong>Category:</strong> ${listing.category}</p>
+                <p><strong>Location:</strong> ${listing.location}</p>
+                <p><strong>Price:</strong> $${listing.price}</p>
+            </div>
+        `;
+    });
+
+    document.getElementById("petListings").innerHTML = listingsHTML;
+}
+
+// Call the function to load listings
+fetchListings();
+
     </script>
 
 </body>
