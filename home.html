@@ -159,6 +159,7 @@
    
 }
 
+
 /* Navigation Buttons */
 .nav-item {
     text-decoration: none;
@@ -271,6 +272,37 @@ border: none;
     font-size: 14px;
     color: #666;
   }
+  #petListings {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 20px;
+  padding: 20px;
+}
+
+.listing-card {
+  background: #fff;
+  border-radius: 10px;
+  padding: 15px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+.listing-image {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  border-radius: 10px;
+}
+
+.listing-info h3 {
+  margin: 10px 0;
+  color: #333;
+}
+
+.listing-info p {
+  margin: 5px 0;
+  color: #666;
+}
 
     </style>
 </head>
@@ -439,32 +471,6 @@ function logoutUser() {
             document.getElementById("filterDropdown").style.display = "none";
         }
         async function fetchListings() {
-    const response = await fetch("http://localhost:5000/listings");
-    const listings = await response.json();
-
-    let listingsHTML = "";
-    listings.forEach(listing => {
-        listingsHTML += `
-            <div class="listing-card">
-                <img src="http://localhost:5000/image/${listing.imageId}" alt="${listing.title}" class="listing-image">
-                <h3>${listing.title}</h3>
-                <p>${listing.description}</p>
-                <p><strong>Category:</strong> ${listing.category}</p>
-                <p><strong>Location:</strong> ${listing.location}</p>
-                <p><strong>Price:</strong> $${listing.price}</p>
-            </div>
-        `;
-    });
-
-    document.getElementById("petListings").innerHTML = listingsHTML;
-}
-
-// Call the function to load listings
-fetchListings();
-
-document.addEventListener("DOMContentLoaded", fetchListings);
-
-async function fetchListings() {
   try {
     const response = await fetch("https://backend-petdealz.onrender.com/get-listings");
     const listings = await response.json();
@@ -473,14 +479,19 @@ async function fetchListings() {
     listingContainer.innerHTML = ""; // Clear old listings
 
     listings.forEach(listing => {
+      const imageUrl = listing.media.length > 0 
+        ? `https://backend-petdealz.onrender.com/image/${listing.media[0]}` 
+        : "default.jpg"; // Default image if no media
+
       const listingElement = document.createElement("div");
       listingElement.classList.add("listing-card");
 
       listingElement.innerHTML = `
-        <img src="${listing.media[0] || 'default.jpg'}" alt="Pet Image" class="listing-image">
+        <img src="${imageUrl}" alt="${listing.title}" class="listing-image">
         <div class="listing-info">
           <h3>${listing.title}</h3>
           <p>${listing.description}</p>
+          <p><strong>Category:</strong> ${listing.category}</p>
           <p><strong>Location:</strong> ${listing.location}</p>
           <p><strong>Price:</strong> $${listing.price}</p>
         </div>
@@ -492,6 +503,9 @@ async function fetchListings() {
     console.error("Error fetching listings:", error);
   }
 }
+
+// Load listings when the page loads
+document.addEventListener("DOMContentLoaded", fetchListings);
 
 
     </script>
