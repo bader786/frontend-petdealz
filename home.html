@@ -13,13 +13,14 @@
             font-family: Arial, sans-serif;
             margin: 0;
             padding: 0;
-            background-color: #f4f4f4;
+            background-color: #E8F0F2;;
         }
         .navbar {
             display: flex;
             align-items: center;
             justify-content: space-between;
-            background: #fff;
+           
+            background: #3A506B;
             padding: 10px 20px;
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
         }
@@ -32,9 +33,11 @@
             font-size: 24px;
             background: none;
             border: none;
+            color: #FFFFFF;
             cursor: pointer;
         }
         .slogan {
+            color: #FFFFFF;
             font-size: 20px;
             font-weight: bold;
             margin-bottom: 5px;
@@ -49,7 +52,7 @@
             position: absolute;
             top: 40px;
             left: 0;
-            background: white;
+            background: #5BC0BE;
             border: 1px solid #ccc;
             border-radius: 5px;
             box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
@@ -60,10 +63,10 @@
             display: block;
             padding: 10px;
             text-decoration: none;
-            color: rgb(0, 0, 0);
+            color: #FFFFFF;
         }
         .dropdown-menu a:hover {
-            background: #ffffff;
+            background: #1C2541;
         }
         /* 🔹 Filter Button */
         .filter-container {
@@ -71,8 +74,8 @@
         }
         .filter-button {
             padding: 9px 15px;
-            background: #007bff;
-            color: white;
+            background: #1C2541;
+    color: #FFFFFF;
             border: none;
             cursor: pointer;
             border-radius: 100px;
@@ -81,8 +84,8 @@
         .filter-dropdown {
             display: none;
             position: absolute;
-            background: rgb(0, 0, 0);
-            border: 1px solid #ccc;
+            background: #5BC0BE;
+            border: 1px solid #3A506B;
             padding: 10px;
             border-radius: 5px;
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
@@ -91,15 +94,17 @@
         .filter-dropdown button {
             display: block;
             width: 100%;
-            color: white;
+            
             margin: 5px 5px;
             padding: 10px;
             border: none;
-            background: #170f8a;
+            background: #1C2541;
+            color: #FFFFFF;
             cursor: pointer;
         }
         .filter-dropdown button:hover {
-            background: #000000;
+            background: #0B132B;
+
         }
         /* 🔹 Pet Listings */
         .pet-listings {
@@ -108,12 +113,14 @@
             justify-content: center;
             gap: 15px;
             padding: 20px;
+            background-color: #E8F0F2;
         }
         .pet-card {
-            background: white;
+            background: #FFFFFF;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
             padding: 15px;
             border-radius: 8px;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+           
             width: 200px;
             text-align: center;
         }
@@ -126,7 +133,7 @@
         }
         .pet-card p {
             font-size: 16px;
-            color: #007bff;
+            color: #3A506B;
             font-weight: bold;
         }
         .pet-container {
@@ -142,19 +149,22 @@
     bottom: 0;
     left: 0;
     width: 100%;
-    background: white;
+    cursor: pointer;
+    background: #1C2541;
+    border-top: 2px solid #5BC0BE;
     display: flex;
     justify-content: space-around;
     align-items: center;
     padding: 10px 0;
-    border-top: 2px solid #ddd;
+   
 }
 
 /* Navigation Buttons */
 .nav-item {
     text-decoration: none;
     font-size: 16px;
-    color: rgb(0, 0, 0);
+    color: #FFFFFF;
+
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -168,7 +178,7 @@
     padding-left: 80px;
     text-decoration: none;
     font-size: 16px;
-    color: rgb(0, 0, 0);
+    color: #FFFFFF;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -181,22 +191,27 @@
 
 /* Floating Add Button */
 .add-btn {
-    width: 60px;
-    height: 60px;
-    background-color: white;
-    color: rgb(0, 0, 0);
-    
-    
-   
+    width: 80px;
+    height: 70px;
+    background-color:#5BC0BE;
+    color: #FFFFFF;
     padding-left: 10px;
     font-size:20px;
     font-weight: bold;
-    border:none;
+    border-radius: 50%;
    
     display: flex;
     align-items: center;
     justify-content: center;
     position: absolute;
+border: none;
+    .add-btn:hover {
+    background-color: #3A506B;
+}
+
+.plus {
+    color: #FFFFFF;
+}
    
     
    
@@ -214,6 +229,8 @@
         .slogan{
             margin-top: -3px;
         }
+
+
 
     </style>
 </head>
@@ -238,7 +255,7 @@
             </p>
         
             <button id="categoryBtn" style="
-                background-color: #007bff; 
+                background-color:#1C2541; 
                 color: white; 
                 border: none; 
                 padding: 12px 24px; 
@@ -254,7 +271,7 @@
         
             <div id="categoryDropdown" style="
                 display: none; 
-                background: rgb(0, 0, 0); 
+                background:#5BC0BE; 
                 box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); 
                 border-radius: 5px; 
                 padding: 10px; 
@@ -266,8 +283,8 @@
                 text-align: left;">
                 <a href="#" style="display: block; padding: 8px 12px; text-decoration: none; color: rgb(255, 255, 255);">Dogs</a>
                 <a href="#" style="display: block; padding: 8px 12px; text-decoration: none; color: rgb(255, 255, 255);">Cats</a>
-                <a href="#" style="display: block; padding: 8px 12px; text-decoration: none; color: rgb(255, 255, 255);">Birds</a>
-                <a href="#" style="display: block; padding: 8px 12px; text-decoration: none; color: rgb(254, 254, 254);">Rabbits</a>
+                <a href="#" style="display: block; padding: 8px 12px; text-decoration: none; color: rgb(255, 255, 255);">Goat</a>
+                <a href="#" style="display: block; padding: 8px 12px; text-decoration: none; color: rgb(254, 254, 254);">Other</a>
             </div>
         </div>
         
