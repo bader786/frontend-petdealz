@@ -479,13 +479,12 @@ function logoutUser() {
         listingContainer.innerHTML = ""; // Clear old listings
 
         listings.forEach(listing => {
+            const imageUrl = listing.media && listing.media.length > 0
+                ? `https://backend-petdealz.onrender.com/image/${listing.media[0]}` 
+                : 'default.jpg'; // Fallback image
+
             const listingElement = document.createElement("div");
             listingElement.classList.add("listing-card");
-
-            // Set Image Source (Use GridFS URL)
-            const imageUrl = listing.media[0] 
-                ? `https://backend-petdealz.onrender.com/image/${listing.media[0]}` 
-                : 'default.jpg';
 
             listingElement.innerHTML = `
                 <img src="${imageUrl}" alt="Pet Image" class="listing-image">
@@ -503,6 +502,7 @@ function logoutUser() {
         console.error("Error fetching listings:", error);
     }
 }
+
 
 
     </script>
