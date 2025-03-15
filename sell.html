@@ -114,75 +114,69 @@
     </div>
 
     <script>
+document.getElementById("media").addEventListener("change", function () {
+    const preview = document.getElementById("image-preview");
+    preview.innerHTML = "";
+    const files = this.files;
 
-fetch("http://yourserver.com/post-listing", {
-  method: "POST",
-  headers: {
-    "Authorization": `Bearer ${localStorage.getItem("token")}`, // Ensure token is stored
-    "Content-Type": "application/json"
-  },
-  body: JSON.stringify({
-    title: "Pet for Sale",
-    description: "Cute puppy",
-    category: "Dogs",
-    location: "NYC",
-    price: 200
-  })
+    if (files.length > 6) {
+        alert("You can only upload up to 6 images.");
+        this.value = "";
+        return;
+    }
+
+    for (const file of files) {
+        if (file.size > 2 * 1024 * 1024) { // 2MB limit
+            alert("Each image must be less than 2MB.");
+            this.value = "";
+            return;
+        }
+        const img = document.createElement("img");
+        img.classList.add("preview-img");
+        img.src = URL.createObjectURL(file);
+        preview.appendChild(img);
+    }
 });
 
-        document.getElementById("media").addEventListener("change", function () {
-            const preview = document.getElementById("image-preview");
-            preview.innerHTML = "";
-            const files = this.files;
+document.getElementById("sellForm").addEventListener("submit", async function (e) {
+    e.preventDefault();
 
-            if (files.length > 6) {
-                alert("You can only upload up to 6 images.");
-                this.value = "";
-                return;
-            }
+    const formData = new FormData(this);
+    const userId = localStorage.getItem("userId");
+    const token = localStorage.getItem("token");
 
-            for (const file of files) {
-                if (file.size > 2 * 1024 * 1024) { // 2MB limit
-                    alert("Each image must be less than 2MB.");
-                    this.value = "";
-                    return;
-                }
-                const img = document.createElement("img");
-                img.classList.add("preview-img");
-                img.src = URL.createObjectURL(file);
-                preview.appendChild(img);
-            }
+    // Check if user is logged in
+    if (!userId || !token) {
+        document.getElementById("message").innerHTML = "❌ Please log in to post a listing.";
+        return;
+    }
+
+    formData.append("userId", userId); 
+
+    try {
+        const response = await fetch("https://backend-petdealz-1.onrender.com/post-listing", {
+            method: "POST",
+            headers: {
+                "Authorization": `Bearer ${token}`
+            },
+            body: formData
         });
 
-        document.getElementById("sellForm").addEventListener("submit", async function (e) {
-            e.preventDefault();
+        const result = await response.json();
+        
+        if (response.ok) {
+            document.getElementById("message").innerHTML = "✅ Listing posted successfully!";
+            this.reset(); // Clear form
+            document.getElementById("image-preview").innerHTML = "";
+        } else {
+            document.getElementById("message").innerHTML = `❌ ${result.error || "Failed to post listing"}`;
+        }
+    } catch (error) {
+        console.error("❌ Error:", error);
+        document.getElementById("message").innerHTML = "❌ Error posting listing.";
+    }
+});
 
-            const formData = new FormData(this);
-            const userId = localStorage.getItem("userId"); // Retrieve user ID dynamically
-            if (!userId) {
-                document.getElementById("message").innerHTML = "❌ Please log in to post a listing.";
-                return;
-            }
-            formData.append("userId", userId);
-
-            try {
-                const response = await fetch("https://backend-petdealz-1.onrender.com/post-listing", {
-                    method: "POST",
-                    body: formData
-                });
-
-                const result = await response.json();
-                if (response.ok) {
-                    document.getElementById("message").innerHTML = "✅ Listing posted successfully!";
-                    this.reset(); // Clear form
-                    document.getElementById("image-preview").innerHTML = "";
-                } else {
-                    document.getElementById("message").innerHTML = "❌ " + result.error;
-                }
-            } catch (error) {
-                document.getElementById("message").innerHTML = "❌ Error posting listing.";
-            }
-        });
     </script>
 </body>
 </html>
