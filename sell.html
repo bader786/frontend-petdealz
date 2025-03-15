@@ -6,64 +6,77 @@
     <title>Sell Your Pet - PetDealz</title>
    <style>
     body {
-    font-family: Arial, sans-serif;
-    background-color: #f9f9f9;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    margin: 0;
-}
+        font-family: Arial, sans-serif;
+        background-color: #f9f9f9;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin: 0;
+    }
 
-.container {
-    width: 100%;
-    max-width: 400px;
-    background: #fff;
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-}
+    .container {
+        width: 100%;
+        max-width: 400px;
+        background: #fff;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
 
-h2 {
-    text-align: center;
-}
+    h2 {
+        text-align: center;
+    }
 
-form {
-    display: flex;
-    flex-direction: column;
-}
+    form {
+        display: flex;
+        flex-direction: column;
+    }
 
-label {
-    margin: 10px 0 5px;
-}
+    label {
+        margin: 10px 0 5px;
+    }
 
-input, select, textarea {
-    padding: 8px;
-    margin-bottom: 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-}
+    input, select, textarea {
+        padding: 8px;
+        margin-bottom: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+    }
 
-button {
-    background: #28a745;
-    color: white;
-    padding: 10px;
-    border: none;
-    cursor: pointer;
-    border-radius: 5px;
-    font-size: 16px;
-}
+    button {
+        background: #28a745;
+        color: white;
+        padding: 10px;
+        border: none;
+        cursor: pointer;
+        border-radius: 5px;
+        font-size: 16px;
+    }
 
-button:hover {
-    background: #218838;
-}
+    button:hover {
+        background: #218838;
+    }
 
-#message {
-    margin-top: 10px;
-    text-align: center;
-    font-weight: bold;
-}
+    #message {
+        margin-top: 10px;
+        text-align: center;
+        font-weight: bold;
+    }
 
+    #image-preview {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 5px;
+        margin-top: 10px;
+    }
+    .preview-img {
+        width: 60px;
+        height: 60px;
+        object-fit: cover;
+        border-radius: 5px;
+        border: 1px solid #ccc;
+    }
    </style>
 </head>
 <body>
@@ -90,48 +103,70 @@ button:hover {
             <label for="price">Price ($):</label>
             <input type="number" id="price" name="price" required>
 
-            <label for="media">Upload Images (Max 6):</label>
+            <label for="media">Upload Images (Max 6, 2MB each):</label>
             <input type="file" id="media" name="media" accept="image/*" multiple required>
-
+            <div id="image-preview"></div>
+            
             <button type="submit">Post Listing</button>
         </form>
 
         <div id="message"></div>
     </div>
 
-    <script >
-        document.getElementById("sellForm").addEventListener("submit", async function (e) {
-    e.preventDefault();
+    <script>
+        document.getElementById("media").addEventListener("change", function () {
+            const preview = document.getElementById("image-preview");
+            preview.innerHTML = "";
+            const files = this.files;
 
-    const formData = new FormData(this);
-    const userId = "123456"; // Replace with actual user ID from login
-    formData.append("userId", userId);
+            if (files.length > 6) {
+                alert("You can only upload up to 6 images.");
+                this.value = "";
+                return;
+            }
 
-    // Validate image count
-    const files = document.getElementById("media").files;
-    if (files.length > 6) {
-        document.getElementById("message").innerHTML = "❌ You can only upload up to 6 images.";
-        return;
-    }
-
-    try {
-        const response = await fetch("https://backend-petdealz-1.onrender.com/post-listing", {
-            method: "POST",
-            body: formData
+            for (const file of files) {
+                if (file.size > 2 * 1024 * 1024) { // 2MB limit
+                    alert("Each image must be less than 2MB.");
+                    this.value = "";
+                    return;
+                }
+                const img = document.createElement("img");
+                img.classList.add("preview-img");
+                img.src = URL.createObjectURL(file);
+                preview.appendChild(img);
+            }
         });
 
-        const result = await response.json();
-        if (response.ok) {
-            document.getElementById("message").innerHTML = "✅ Listing posted successfully!";
-            this.reset(); // Clear form
-        } else {
-            document.getElementById("message").innerHTML = "❌ " + result.error;
-        }
-    } catch (error) {
-        document.getElementById("message").innerHTML = "❌ Error posting listing.";
-    }
-});
+        document.getElementById("sellForm").addEventListener("submit", async function (e) {
+            e.preventDefault();
 
+            const formData = new FormData(this);
+            const userId = localStorage.getItem("userId"); // Retrieve user ID dynamically
+            if (!userId) {
+                document.getElementById("message").innerHTML = "❌ Please log in to post a listing.";
+                return;
+            }
+            formData.append("userId", userId);
+
+            try {
+                const response = await fetch("https://backend-petdealz-1.onrender.com/post-listing", {
+                    method: "POST",
+                    body: formData
+                });
+
+                const result = await response.json();
+                if (response.ok) {
+                    document.getElementById("message").innerHTML = "✅ Listing posted successfully!";
+                    this.reset(); // Clear form
+                    document.getElementById("image-preview").innerHTML = "";
+                } else {
+                    document.getElementById("message").innerHTML = "❌ " + result.error;
+                }
+            } catch (error) {
+                document.getElementById("message").innerHTML = "❌ Error posting listing.";
+            }
+        });
     </script>
 </body>
 </html>
