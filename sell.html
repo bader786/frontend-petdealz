@@ -114,6 +114,22 @@
     </div>
 
     <script>
+
+fetch("http://yourserver.com/post-listing", {
+  method: "POST",
+  headers: {
+    "Authorization": `Bearer ${localStorage.getItem("token")}`, // Ensure token is stored
+    "Content-Type": "application/json"
+  },
+  body: JSON.stringify({
+    title: "Pet for Sale",
+    description: "Cute puppy",
+    category: "Dogs",
+    location: "NYC",
+    price: 200
+  })
+});
+
         document.getElementById("media").addEventListener("change", function () {
             const preview = document.getElementById("image-preview");
             preview.innerHTML = "";
