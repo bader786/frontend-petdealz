@@ -149,6 +149,8 @@
     bottom: 0;
     left: 0;
     width: 100%;
+    display: flex;
+    justify-content: space-between;
     cursor: pointer;
     background: #1C2541;
     border-top: 2px solid #5BC0BE;
@@ -303,6 +305,23 @@ border: none;
   margin: 5px 0;
   color: #666;
 }
+.dropdown-menu, .filter-dropdown {
+    transition: all 0.3s ease-in-out;
+    opacity: 0;
+    transform: scaleY(0);
+    transform-origin: top;
+}
+.dropdown-menu.active, .filter-dropdown.active {
+    opacity: 1;
+    transform: scaleY(1);
+}
+@media (max-width: 600px) {
+    .pet-listings {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+
 
     </style>
 </head>
@@ -395,7 +414,20 @@ border: none;
     </div>
 
     <!-- 📌 Pet Listings -->
-    <div class="pet-listings" id="petListings"></div>
+    <div class="pet-listings" id="petListings">
+        petCard.innerHTML = `
+    <a href="pet-details.html?id=${pet.id}" style="text-decoration: none; color: inherit;">
+        <img src="${pet.image}" alt="${pet.name}" class="listing-img">
+        <div class="listing-info">
+            <h3>${pet.name}</h3>
+            <p>Price: $${pet.price}</p>
+            <p>Breed: ${pet.breed}</p>
+            <p>Location: ${pet.location}</p>
+        </div>
+    </a>
+`;
+
+    </div>
     <!-- Bottom Navigation Bar -->
 <!-- Bottom Navigation Bar -->
 <div class="bottom-nav">
@@ -459,13 +491,15 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 function fetchPets() {
-    fetch("https://backend-petdealz-1.onrender.com/pets") // Replace with your actual API URL
+    fetch("https://backend-petdealz-1.onrender.com/pets")
         .then(response => response.json())
-        .then(data => {
-            displayPets(data);
-        })
-        .catch(error => console.error("Error fetching pet data:", error));
+        .then(data => displayPets(data))
+        .catch(error => {
+            console.error("Error fetching pet data:", error);
+            document.getElementById("petListings").innerHTML = "<p style='color:red;'>Failed to load pets. Please try again later.</p>";
+        });
 }
+
 
 function displayPets(pets) {
     let petContainer = document.getElementById("petListings");

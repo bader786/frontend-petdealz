@@ -12,6 +12,7 @@
             align-items: center;
             height: 100vh;
             background-color: #f4f4f4;
+            margin: 0;
         }
         .container {
             background: white;
@@ -23,14 +24,21 @@
         }
         h2 {
             margin-bottom: 20px;
+            font-family: 'Poppins', sans-serif;
+            font-size: 30px;
+            background: linear-gradient(45deg, #ff9800, #ff5722, #e91e63, #9c27b0);
+            background-size: 300% 300%;
+            background-clip: border-box;
+            -webkit-background-clip: text;
+            color: transparent;
         }
         input {
             width: 100%;
-            
             padding: 10px;
             margin: 10px 0;
             border: 2px solid #000000;
             border-radius: 20px;
+            font-size: 14px;
         }
         button {
             width: 100%;
@@ -41,23 +49,20 @@
             font-size: 21px;
             cursor: pointer;
             border-radius: 20px;
+            transition: background 0.3s;
         }
         button:hover {
-            background:#000000;
+            background: #000000;
         }
         .link {
             margin-top: 10px;
             display: block;
+            color: #007bff;
+            text-decoration: none;
+            font-size: 14px;
         }
-        h2 {
-            font-family: 'Poppins', sans-serif;
-            font-size: 30px;
-            text-align: center;
-            background: linear-gradient(45deg, #ff9800, #ff5722, #e91e63, #9c27b0);
-            background-size: 300% 300%;
-            background-clip: border-box;
-            -webkit-background-clip: text;
-            color: transparent;
+        .link:hover {
+            text-decoration: underline;
         }
     </style>
 </head>
@@ -72,17 +77,15 @@
 
     <script>
         async function login() {
-            const email = document.getElementById('email').value;
+            const email = document.getElementById('email').value.trim();
             const password = document.getElementById('password').value;
-            
-            // Basic validation
+            const loginButton = document.querySelector("button");
+
             if (!email || !password) {
                 alert("Please enter both email and password!");
                 return;
             }
 
-            // Disable button to avoid multiple clicks
-            const loginButton = document.querySelector("button");
             loginButton.disabled = true;
             loginButton.innerText = "Logging in...";
 
@@ -90,23 +93,22 @@
                 const response = await fetch('https://backend-petdealz-1.onrender.com/login', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
+                    credentials: 'include',  // Ensure cookies are sent
                     body: JSON.stringify({ email, password })
                 });
 
                 const data = await response.json();
                 if (response.ok) {
                     alert('Login successful!');
-                    localStorage.setItem('token', data.token);
                     window.location.href = 'home.html';
                 } else {
                     alert(data.error || "Login failed. Please check your credentials.");
                 }
             } catch (error) {
                 alert("Error: Unable to connect to the server.");
-                console.error(error);
+                console.error("Login Error:", error);
             }
 
-            // Re-enable the button
             loginButton.disabled = false;
             loginButton.innerText = "Login";
         }
